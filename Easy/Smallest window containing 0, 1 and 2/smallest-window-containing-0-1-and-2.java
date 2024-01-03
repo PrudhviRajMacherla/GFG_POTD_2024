@@ -26,26 +26,44 @@ class GFG {
 
 class Solution {
     public int smallestSubstring(String S) {
-       int z_idx=-1;
-       int o_idx=-1;
-       int t_idx=-1;
-       int ans=Integer.MAX_VALUE;
-       for(int i=0;i<S.length();i++)
+       int z_c=0,o_c=0,t_c=0;
+       int res=Integer.MAX_VALUE;
+       int i=0,j=0;
+       while(i<S.length())
        {
-           if(S.charAt(i)=='0')
-                z_idx=i;
-            else if(S.charAt(i)=='1')
-                o_idx=i;
-            else
-                t_idx=i;
-            
-            if(o_idx!=-1&&t_idx!=-1&&z_idx!=-1)
-            {
-                int min=Math.min(o_idx,Math.min(t_idx,z_idx));
-                int max=Math.max(o_idx,Math.max(t_idx,z_idx));
-                ans=Math.min(ans,max-min+1);
-            }
+           char ch=S.charAt(i);
+           i++;
+           if(ch=='0')
+           {
+               z_c+=1;
+           }
+           else if(ch=='1')
+           {
+               o_c+=1;
+           }
+           else
+           {
+               t_c+=1;
+           }
+           while(z_c>0&&o_c>0&&t_c>0)
+           {
+               res=Math.min(i-j,res);
+               char ch1=S.charAt(j);
+               j+=1;
+               if(ch1=='0')
+               {
+                   z_c-=1;
+               }
+               else if(ch1=='1')
+               {
+                   o_c-=1;
+               }
+               else
+               {
+                   t_c-=1;
+               }
+           }
        }
-       return ans==Integer.MAX_VALUE?-1:ans;
+       return res==Integer.MAX_VALUE?-1:res;
     }
 };
